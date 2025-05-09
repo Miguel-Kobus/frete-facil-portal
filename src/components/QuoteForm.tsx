@@ -6,28 +6,28 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Truck } from "lucide-react";
 
-// Lista das principais cidades brasileiras
+// Lista das principais cidades brasileiras em ordem alfabética
 const principalCities = [
-  "São Paulo",
-  "Rio de Janeiro",
-  "Brasília",
-  "Salvador",
-  "Fortaleza",
-  "Belo Horizonte",
-  "Manaus",
-  "Curitiba",
-  "Recife",
-  "Porto Alegre",
   "Belém",
+  "Belo Horizonte",
+  "Brasília",
+  "Campo Grande",
+  "Campinas",
+  "Curitiba",
+  "Duque de Caxias",
+  "Fortaleza",
   "Goiânia",
   "Guarulhos",
-  "Campinas",
-  "São Luís",
-  "São Gonçalo",
   "Maceió",
-  "Duque de Caxias",
-  "Campo Grande",
-  "Natal"
+  "Manaus",
+  "Natal",
+  "Porto Alegre",
+  "Recife",
+  "Rio de Janeiro",
+  "Salvador",
+  "São Gonçalo",
+  "São Luís",
+  "São Paulo"
 ];
 
 const QuoteForm = () => {
