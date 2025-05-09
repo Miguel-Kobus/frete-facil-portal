@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import React, { useState, useRef, ChangeEvent } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -30,11 +30,62 @@ const principalCities = [
   "São Paulo"
 ];
 
+// Função para formatar telefone
+const formatPhoneNumber = (value: string): string => {
+  // Remove todos os caracteres não numéricos
+  const numbers = value.replace(/\D/g, '');
+  
+  // Verifica se parece ser um número de telefone (tem só números)
+  if (/^\d+$/.test(value)) {
+    // Formato para celular: (XX) XXXXX-XXXX
+    if (numbers.length <= 11) {
+      let formatted = '';
+      
+      if (numbers.length > 0) {
+        formatted += `(${numbers.substring(0, 2)}`;
+      }
+      if (numbers.length > 2) {
+        formatted += `) ${numbers.substring(2, 7)}`;
+      }
+      if (numbers.length > 7) {
+        formatted += `-${numbers.substring(7, 11)}`;
+      }
+      
+      return formatted;
+    }
+  }
+  
+  // Se não for um número de telefone ou tiver mais de 11 dígitos, retorna o valor original
+  return value;
+};
+
+// Função para verificar se é um email
+const isEmail = (value: string): boolean => {
+  return value.includes('@') && value.includes('.');
+};
+
 const QuoteForm = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
   const [origin, setOrigin] = useState("");
   const [destination, setDestination] = useState("");
+  const [contact, setContact] = useState("");
+  const lastContactValue = useRef("");
+  
+  const handleContactChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    
+    // Se for um email (contém @ e .), mantém o valor sem formatar
+    if (isEmail(value)) {
+      setContact(value);
+      lastContactValue.current = value;
+    } else {
+      // Se for um número de telefone (contém apenas dígitos), formata
+      const formattedValue = formatPhoneNumber(value);
+      setContact(formattedValue);
+      lastContactValue.current = formattedValue;
+    }
+  };
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -151,6 +202,8 @@ const QuoteForm = () => {
             <Input 
               id="contact" 
               placeholder="Seu contato para retorno" 
+              value={contact}
+              onChange={handleContactChange}
               required 
             />
           </div>
