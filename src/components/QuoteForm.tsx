@@ -6,9 +6,35 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { useToast } from "@/hooks/use-toast";
 import { Truck } from "lucide-react";
 
+// Lista das principais cidades brasileiras
+const principalCities = [
+  "São Paulo",
+  "Rio de Janeiro",
+  "Brasília",
+  "Salvador",
+  "Fortaleza",
+  "Belo Horizonte",
+  "Manaus",
+  "Curitiba",
+  "Recife",
+  "Porto Alegre",
+  "Belém",
+  "Goiânia",
+  "Guarulhos",
+  "Campinas",
+  "São Luís",
+  "São Gonçalo",
+  "Maceió",
+  "Duque de Caxias",
+  "Campo Grande",
+  "Natal"
+];
+
 const QuoteForm = () => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
+  const [origin, setOrigin] = useState("");
+  const [destination, setDestination] = useState("");
   
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -38,21 +64,35 @@ const QuoteForm = () => {
               <label htmlFor="origin" className="block text-sm font-medium text-gray-700 mb-1">
                 Origem
               </label>
-              <Input 
-                id="origin" 
-                placeholder="Cidade de origem" 
-                required 
-              />
+              <Select value={origin} onValueChange={setOrigin} required>
+                <SelectTrigger id="origin">
+                  <SelectValue placeholder="Selecione a cidade de origem" />
+                </SelectTrigger>
+                <SelectContent>
+                  {principalCities.map((city) => (
+                    <SelectItem key={city} value={city}>
+                      {city}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <label htmlFor="destination" className="block text-sm font-medium text-gray-700 mb-1">
                 Destino
               </label>
-              <Input 
-                id="destination" 
-                placeholder="Cidade de destino" 
-                required 
-              />
+              <Select value={destination} onValueChange={setDestination} required>
+                <SelectTrigger id="destination">
+                  <SelectValue placeholder="Selecione a cidade de destino" />
+                </SelectTrigger>
+                <SelectContent>
+                  {principalCities.map((city) => (
+                    <SelectItem key={city} value={city}>
+                      {city}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
